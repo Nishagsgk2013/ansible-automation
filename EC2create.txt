@@ -1,0 +1,24 @@
+Ansible playbook to create an EC2 instance
+
+
+
+---
+- hosts: localhost
+  vars:
+   - ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: Create an ec2 instance
+      ec2:
+        key_name: ******
+        instance_type: t2.micro
+        image: ami-02238ac43d6385ab3
+        wait: yes
+          # group: webserver
+        count: 1
+        vpc_subnet_id: subnet-0064e20cea7b09be2
+        region: us-east-2
+        aws_access_key: ********
+        aws_secret_key: ********
+        assign_public_ip: yes
+
+
