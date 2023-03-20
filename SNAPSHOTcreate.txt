@@ -1,0 +1,35 @@
+
+
+
+
+Ansible playbook to create snapshots for ebs volumes:
+
+---
+- name: Create EBS volume snapshots
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    volumes:
+      - volume_id: vol-010edffc3477d5789
+        snapshot_description: "Snapshot for volume 1"
+      - volume_id: vol-0d213c4fb619de90e
+        snapshot_description: "Snapshot for volume 2"
+
+  tasks:
+    - name: Create EBS volume snapshots
+      ec2_snapshot:
+        region: us-east-2
+        volume_id: "{{ item.volume_id }}"
+        description: "{{ item.snapshot_description }}"
+      with_items: "{{ volumes }}"
+      register: snapshot_result
+
+    - name: Display snapshot IDs
+      debug:
+        var: item.id
+      with_items: "{{ snapshot_result.results }}"
+~
+
+
+
