@@ -1,0 +1,26 @@
+Ansible playbook to terminate an EC2 instance
+
+---
+- name: Terminate EC2 instance
+  hosts: localhost
+  gather_facts: true
+
+  vars:
+    instance_id: "i-0ce816045d451c828"
+
+  tasks:
+    - name: Terminate EC2 instance
+      ec2_instance:
+        region: us-east-2
+        instance_ids: "{{ instance_id }}"
+        state: absent
+      register: ec2_termination_result
+
+    - name: Display termination result
+      debug:
+        var: ec2_termination_result
+~
+~
+~
+
+
